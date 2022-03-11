@@ -1,6 +1,6 @@
 body {
   height: 100vh;
-  padding-top: 100px;
+  padding-top: 120px;
 }
 
 header {
@@ -8,7 +8,7 @@ header {
     top: 0;
     left: 0;
     width: 100%;
-    height: 100px
+    
 }
 
 .headImg {
@@ -19,3 +19,25 @@ header {
 .min-100 {
     height: 100%;
   }
+
+.title {
+    color: #3d5cff;
+}
+
+.searchResults {
+    background-color: #8927d4;
+    border-left: solid 15px #240e54;
+}
+
+.searchBar {
+    background-color: #f74945;
+    border-right: solid 10px #3d5cff;
+}
+
+/* 
+Hand Colors
+red- f74945
+blue- 3d5cff
+light purple- 8927d4
+dark purple- 240e54 
+*/
