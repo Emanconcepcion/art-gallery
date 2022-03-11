@@ -1,19 +1,86 @@
-var searchFormEl = document.querySelector('#blank');
+
+var searchFormEl = document.querySelector('#search-form');
+
+function handleSearchFormSubmit(event) {
+event.preventDefault();
+
+// add proper id-input
+var searchInputVal = document.querySelector('#search-input').value;
+
+if (!searchInputVal) {
+    console.error('You need a search input value');
+    return
+}
+
+}
+
+(fetch ('https://api.si.edu/openaccess/api/v1.0/category/art_design/search?q=sunflower&api_key=xVWKM7KD50ojASIynRofcGlWFKgmeqwRwu9i3XKE', {
+method: 'POST',
+headers: {
+    'Content-Type': 'application/json'
+},
+body: JSON.stringify({
+    name: 'User 1'
+})
+})
+.then(function(Response){
+return Response.json()
+})
+
+.then(function(data){
+console.log(data)
+getCollectionData(data.objectIds)
+})
+
+
+function getCollectionData(objectIds){
+    for(var i = 0; i < objectIds.length; i++)
+fetch ('https://api.si.edu/openaccess/api/v1.0/category/' + objectIds[i])
+
+.then(function(Response){
+return Response.json()
+})
+
+.then(function(data){
+console.log(data)
+
+})
+// .catch(error => console.log('ERROR'));
+
+// met api function
+function getCollectionData(objectIDs) {
+
+    for(var i = 0; i<objectIDs.length; i++) {
+        fetch('https://collectionapi.metmuseum.org/public/collection/v1/objects/'+ objectIDs[i])
+        .then(function(response){
+            return response.json()
+        })
+        .then(function(data){
+            console.log(data)
+        })
+    }
+}
+
+var searchFormEl = document.querySelector('#search-form');
 
 function handleSearchFormSubmit(event) {
     event.preventDefault();
 
-    // add proper id-input
-    var searchInputVal = document.querySelector('#blank-input').value;
-    var formatInputVal = document.querySelector('#blank-input').value;
+
+    var searchInputVal = document.querySelector('#search-input').value;
 
     if (!searchInputVal) {
         console.error('You need a search input value');
         return
-    }
-
-    // add proper id
-    var queryString = 'link' + searchInputVal + '&format=' + formatInputVal; 
+    } 
+    fetch('https://collectionapi.metmuseum.org/public/collection/v1/search?q='+ searchInputVal)
+    .then(function(response){
+        return response.json()
+    })
+    .then(function(data){
+        console.log(data)
+        getCollectionData(data.objectIDs)
+    })
 }
 
 searchFormEl.addEventListener('submit', handleSearchFormSubmit);
