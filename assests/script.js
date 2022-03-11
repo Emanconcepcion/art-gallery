@@ -17,18 +17,13 @@ function printResults(resultObj) {
   var imgResults = document.createElement("img");
   imgResults.setAttribute("src", resultObj.primaryImageSmall);
 
-  //   var linkButtonEl = document.createElement("a");
-  //   linkButtonEl.textContent = "Read More";
-  //   linkButtonEl.setAttribute("href", resultObj.url);
-  //   linkButtonEl.classList.add("btn", "btn-dark");
-
   if (resultObj.primaryImageSmall) {
     resultBody.append(titleEl, imgResults);
     resultContentEl.append(resultCard);
   }
 }
 
-// API Functions
+// Smithsonian API Functions
 
 function getCollectionData(searchTerm) {
   fetch(
@@ -43,13 +38,28 @@ function getCollectionData(searchTerm) {
       console.log(data);
       var sidata = data.response.rows;
       for (var i = 0; i < sidata.length; i++) {
-        console.log(
-          sidata[i].content.descriptiveNonRepeating.online_media.media[0]
-            .thumbnail
-        );
-        var siImage =
-          sidata[i].content.descriptiveNonRepeating.online_media.media[0]
-            .thumbnail;
+        console.log(i);
+        var paintingObj = sidata[i];
+        var imgObj = {
+          title: "",
+          description: "",
+          primaryImageSmall: "",
+          dimensions: "",
+        };
+        imgObj.title = paintingObj.content.title;
+        imgObj.description =
+          paintingObj.content.descriptiveNonRepeating.data_source;
+        imgObj.dimensions = "dimensions unavailable";
+        if (
+          paintingObj.content.descriptiveNonRepeating.online_media !== undefined
+        ) {
+          imgObj.primaryImageSmall =
+            paintingObj.content.descriptiveNonRepeating.online_media.media[0].resources[
+              paintingObj.content.descriptiveNonRepeating.online_media.media[0]
+                .resources.length - 1
+            ].url;
+        }
+        printResults(imgObj);
       }
     })
     .catch((error) => console.log("ERROR"));
@@ -94,7 +104,7 @@ function handleSearchFormSubmit(event) {
     .then(function (data) {
       console.log(data);
       resultContentEl.textContent = "";
-      getCollectionData2(data.objectIDs);
+      // getCollectionData2(data.objectIDs);
       getCollectionData(searchInputVal);
     });
 }
