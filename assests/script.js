@@ -10,20 +10,29 @@
 //     getCollectionData(data.objectIds);
 //   });
 
-function getCollectionData(objectIds) {
-  for (var i = 0; i < objectIds.length; i++)
-    fetch(
-      "https://cors-anywhere.herokuapp.com/https://api.si.edu/openaccess/api/v1.0/category/art_design/search?api_key=xVWKM7KD50ojASIynRofcGlWFKgmeqwRwu9i3XKE&q=" +
-        objectIds[i]
-    )
-      .then(function (Response) {
-        return Response.json();
-      })
+function getCollectionData(searchTerm) {
+  fetch(
+    "https://cors-anywhere.herokuapp.com/https://api.si.edu/openaccess/api/v1.0/category/art_design/search?api_key=xVWKM7KD50ojASIynRofcGlWFKgmeqwRwu9i3XKE&q=" +
+      searchTerm
+  )
+    .then(function (Response) {
+      return Response.json();
+    })
 
-      .then(function (data) {
-        console.log(data);
-      })
-      .catch((error) => console.log("ERROR"));
+    .then(function (data) {
+      console.log(data);
+      var sidata = data.response.rows;
+      for (var i = 0; i < sidata.length; i++) {
+        console.log(
+          sidata[i].content.descriptiveNonRepeating.online_media.media[0]
+            .thumbnail
+        );
+        var siImage =
+          sidata[i].content.descriptiveNonRepeating.online_media.media[0]
+            .thumbnail;
+      }
+    })
+    .catch((error) => console.log("ERROR"));
 }
 // met api function
 function getCollectionData2(objectIDs) {
@@ -61,8 +70,8 @@ function handleSearchFormSubmit(event) {
     })
     .then(function (data) {
       console.log(data);
-      getCollectionData2(data.objectIDs);
-      //   getCollectionData(data.objectIDs);
+      //   getCollectionData2(data.objectIDs);
+      getCollectionData(searchInputVal);
     });
 }
 
