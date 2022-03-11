@@ -1,0 +1,21 @@
+body {
+  height: 100vh;
+  padding-top: 100px;
+}
+
+header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100px
+}
+
+.headImg {
+    width: 120px;
+    z-index: 3;
+}
+
+.min-100 {
+    height: 100%;
+  }
