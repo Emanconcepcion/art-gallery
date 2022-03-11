@@ -1,3 +1,35 @@
+var resultTextEl = document.querySelector("#result-text");
+var resultContentEl = document.querySelector("#result-content");
+
+function printResults(resultObj) {
+  console.log(resultObj);
+
+  var resultCard = document.createElement("div");
+  resultCard.classList.add("card", "bg-light", "text-dark", "mb-3", "p-3");
+
+  var resultBody = document.createElement("div");
+  resultBody.classList.add("card-body");
+  resultCard.append(resultBody);
+
+  var titleEl = document.createElement("h3");
+  titleEl.textContent = resultObj.title;
+
+  var imgResults = document.createElement("img");
+  imgResults.setAttribute("src", resultObj.primaryImageSmall);
+
+  //   var linkButtonEl = document.createElement("a");
+  //   linkButtonEl.textContent = "Read More";
+  //   linkButtonEl.setAttribute("href", resultObj.url);
+  //   linkButtonEl.classList.add("btn", "btn-dark");
+
+  if (resultObj.primaryImageSmall) {
+    resultBody.append(titleEl, imgResults);
+    resultContentEl.append(resultCard);
+  }
+}
+
+// API Functions
+
 function getCollectionData(searchTerm) {
   fetch(
     "https://cors-anywhere.herokuapp.com/https://api.si.edu/openaccess/api/v1.0/category/art_design/search?api_key=xVWKM7KD50ojASIynRofcGlWFKgmeqwRwu9i3XKE&q=" +
@@ -22,7 +54,8 @@ function getCollectionData(searchTerm) {
     })
     .catch((error) => console.log("ERROR"));
 }
-// met api function
+// met api
+
 function getCollectionData2(objectIDs) {
   for (var i = 0; i < 20; i++) {
     fetch(
@@ -34,6 +67,8 @@ function getCollectionData2(objectIDs) {
       })
       .then(function (data) {
         console.log(data);
+
+        printResults(data);
       });
   }
 }
@@ -58,7 +93,8 @@ function handleSearchFormSubmit(event) {
     })
     .then(function (data) {
       console.log(data);
-      //   getCollectionData2(data.objectIDs);
+      resultContentEl.textContent = "";
+      getCollectionData2(data.objectIDs);
       getCollectionData(searchInputVal);
     });
 }
