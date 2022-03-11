@@ -1,3 +1,4 @@
+
 var searchFormEl = document.querySelector('#search-form');
 
 function handleSearchFormSubmit(event) {
@@ -45,5 +46,6 @@ console.log(data)
 
 }
 // .catch(error => console.log('ERROR'));
+
 
 searchFormEl.addEventListener('submit', handleSearchFormSubmit);
