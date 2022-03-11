@@ -1,15 +1,3 @@
-// fetch(
-//   "https://cors-anywhere.herokuapp.com/https://api.si.edu/openaccess/api/v1.0/category/art_design/search?q=boat&api_key=xVWKM7KD50ojASIynRofcGlWFKgmeqwRwu9i3XKE"
-// )
-//   .then(function (Response) {
-//     return Response.json();
-//   })
-
-//   .then(function (data) {
-//     console.log(data);
-//     getCollectionData(data.objectIds);
-//   });
-
 function getCollectionData(searchTerm) {
   fetch(
     "https://cors-anywhere.herokuapp.com/https://api.si.edu/openaccess/api/v1.0/category/art_design/search?api_key=xVWKM7KD50ojASIynRofcGlWFKgmeqwRwu9i3XKE&q=" +
