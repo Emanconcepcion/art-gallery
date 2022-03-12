@@ -14,11 +14,14 @@ function printResults(resultObj) {
   var titleEl = document.createElement("h3");
   titleEl.textContent = resultObj.title;
 
+  var displayBioEl = document.createElement("p");
+  displayBioEl.innerHTML += resultObj.artistDisplayBio;
+
   var imgResults = document.createElement("img");
   imgResults.setAttribute("src", resultObj.primaryImageSmall);
 
   if (resultObj.primaryImageSmall) {
-    resultBody.append(titleEl, imgResults);
+    resultBody.append(titleEl, imgResults, displayBioEl);
     resultContentEl.append(resultCard);
   }
 }
@@ -104,7 +107,8 @@ function handleSearchFormSubmit(event) {
     .then(function (data) {
       console.log(data);
       resultContentEl.textContent = "";
-      // getCollectionData2(data.objectIDs);
+
+      getCollectionData2(data.objectIDs);
       getCollectionData(searchInputVal);
     });
 }
