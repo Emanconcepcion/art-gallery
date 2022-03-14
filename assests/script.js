@@ -3,8 +3,6 @@ var resultContentEl = document.querySelector("#result-content");
 
 // results images, title, dimensions, linkwrap
 function printResults(resultObj) {
-  console.log(resultObj);
-
   var resultCard = document.createElement("div");
   resultCard.classList.add("card", "bg-light", "text-dark", "mb-3", "p-3");
 
@@ -43,10 +41,8 @@ function getCollectionData(searchTerm) {
     })
     // loop to display imgs
     .then(function (data) {
-      console.log(data);
       var sidata = data.response.rows;
       for (var i = 0; i < sidata.length; i++) {
-        console.log(i);
         var paintingObj = sidata[i];
         var imgObj = {
           title: "",
@@ -76,7 +72,7 @@ function getCollectionData(searchTerm) {
         printResults(imgObj);
       }
     })
-    .catch((error) => console.log("ERROR"));
+    .catch((error) => console.error("ERROR"));
 }
 // met api
 
@@ -92,13 +88,11 @@ function getCollectionData2(objectIDs) {
         return response.json();
       })
       .then(function (data) {
-        // console.log(data);
         metData.push(data);
 
         printResults(data);
       });
   }
-  console.log(metData);
 }
 
 // search function
@@ -126,7 +120,6 @@ function handleSearchFormSubmit(event) {
       return response.json();
     })
     .then(function (data) {
-      console.log(data);
       resultContentEl.textContent = "";
 
       getCollectionData2(data.objectIDs);
@@ -148,8 +141,6 @@ function searchedHistory() {
       paragraphElement.textContent = searchedTerms[i];
 
       searchedHistoryElement.append(paragraphElement);
-
-      console.log(searchedTerms[i]);
     }
   }
 }
