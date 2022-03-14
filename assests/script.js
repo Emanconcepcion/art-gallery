@@ -1,6 +1,7 @@
 var resultTextEl = document.querySelector("#result-text");
 var resultContentEl = document.querySelector("#result-content");
 
+// results images, title, dimensions, linkwrap
 function printResults(resultObj) {
   console.log(resultObj);
 
@@ -40,7 +41,7 @@ function getCollectionData(searchTerm) {
     .then(function (Response) {
       return Response.json();
     })
-
+    // loop to display imgs
     .then(function (data) {
       console.log(data);
       var sidata = data.response.rows;
@@ -55,7 +56,7 @@ function getCollectionData(searchTerm) {
           objectURL: "",
         };
 
-        // building objs to respond
+        // building img objs to respond
         imgObj.title = paintingObj.content.title;
         imgObj.description =
           paintingObj.content.descriptiveNonRepeating.data_source;
@@ -81,7 +82,7 @@ function getCollectionData(searchTerm) {
 
 function getCollectionData2(objectIDs) {
   var metData = [];
-
+  // limit search results to 20
   for (var i = 0; i < 20; i++) {
     fetch(
       "https://collectionapi.metmuseum.org/public/collection/v1/objects/" +
@@ -98,10 +99,11 @@ function getCollectionData2(objectIDs) {
       });
   }
   console.log(metData);
-  //   metData.filter(function (element) {});
 }
 
+// search function
 var searchFormEl = document.querySelector("#search-form");
+var searchedTerms = [];
 
 function handleSearchFormSubmit(event) {
   event.preventDefault();
@@ -112,6 +114,10 @@ function handleSearchFormSubmit(event) {
     console.error("You need a search input value");
     return;
   }
+  searchedTerms.push(searchInputVal);
+  localStorage.setItem("searchedHistory", JSON.stringify(searchedTerms));
+  searchedHistory();
+
   fetch(
     "https://collectionapi.metmuseum.org/public/collection/v1/search?q=" +
       searchInputVal
@@ -129,3 +135,22 @@ function handleSearchFormSubmit(event) {
 }
 
 searchFormEl.addEventListener("submit", handleSearchFormSubmit);
+
+// searched history displayed under search & saves under localstorage
+function searchedHistory() {
+  var savedSearch = JSON.parse(localStorage.getItem("searchedHistory"));
+  if (savedSearch !== null) {
+    searchedTerms = savedSearch;
+    var searchedHistoryElement = document.querySelector("#searchhistory");
+    searchedHistoryElement.textContent = "";
+    for (var i = 0; i < searchedTerms.length; i++) {
+      var paragraphElement = document.createElement("p");
+      paragraphElement.textContent = searchedTerms[i];
+
+      searchedHistoryElement.append(paragraphElement);
+
+      console.log(searchedTerms[i]);
+    }
+  }
+}
+searchedHistory();
