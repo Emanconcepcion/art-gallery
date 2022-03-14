@@ -104,6 +104,7 @@ function getCollectionData2(objectIDs) {
 
 // search function
 var searchFormEl = document.querySelector("#search-form");
+var searchedTerms = [];
 
 function handleSearchFormSubmit(event) {
   event.preventDefault();
@@ -114,6 +115,10 @@ function handleSearchFormSubmit(event) {
     console.error("You need a search input value");
     return;
   }
+  searchedTerms.push(searchInputVal);
+  localStorage.setItem("searchedHistory", JSON.stringify(searchedTerms));
+  searchedHistory();
+
   fetch(
     "https://collectionapi.metmuseum.org/public/collection/v1/search?q=" +
       searchInputVal
@@ -131,3 +136,21 @@ function handleSearchFormSubmit(event) {
 }
 
 searchFormEl.addEventListener("submit", handleSearchFormSubmit);
+
+function searchedHistory() {
+  var savedSearch = JSON.parse(localStorage.getItem("searchedHistory"));
+  if (savedSearch !== null) {
+    searchedTerms = savedSearch;
+    var searchedHistoryElement = document.querySelector("#searchhistory");
+    searchedHistoryElement.textContent = "";
+    for (var i = 0; i < searchedTerms.length; i++) {
+      var paragraphElement = document.createElement("p");
+      paragraphElement.textContent = searchedTerms[i];
+
+      searchedHistoryElement.append(paragraphElement);
+
+      console.log(searchedTerms[i]);
+    }
+  }
+}
+searchedHistory();
