@@ -15,13 +15,17 @@ function printResults(resultObj) {
   titleEl.textContent = resultObj.title;
 
   var displayBioEl = document.createElement("p");
-  displayBioEl.textContent = resultObj.artistDisplayBio;
+  displayBioEl.textContent = resultObj.dimensions;
 
   var imgResults = document.createElement("img");
   imgResults.setAttribute("src", resultObj.primaryImageSmall);
 
+  var imgLinkWrap = document.createElement("a");
+  imgLinkWrap.setAttribute("href", resultObj.objectURL);
+  imgLinkWrap.append(imgResults);
+
   if (resultObj.primaryImageSmall) {
-    resultBody.append(titleEl, imgResults, displayBioEl);
+    resultBody.append(titleEl, imgLinkWrap, displayBioEl);
     resultContentEl.append(resultCard);
   }
 }
@@ -48,11 +52,17 @@ function getCollectionData(searchTerm) {
           description: "",
           primaryImageSmall: "",
           dimensions: "",
+          objectURL: "",
         };
+
+        // building objs to respond
         imgObj.title = paintingObj.content.title;
         imgObj.description =
           paintingObj.content.descriptiveNonRepeating.data_source;
         imgObj.dimensions = "dimensions unavailable";
+        imgObj.objectURL =
+          paintingObj.content.descriptiveNonRepeating.record_link;
+
         if (
           paintingObj.content.descriptiveNonRepeating.online_media !== undefined
         ) {
