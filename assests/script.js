@@ -56,7 +56,7 @@ function getCollectionData(searchTerm) {
           objectURL: "",
         };
 
-        // building objs to respond
+        // building img objs to respond
         imgObj.title = paintingObj.content.title;
         imgObj.description =
           paintingObj.content.descriptiveNonRepeating.data_source;
@@ -99,7 +99,6 @@ function getCollectionData2(objectIDs) {
       });
   }
   console.log(metData);
-  //   metData.filter(function (element) {});
 }
 
 // search function
@@ -137,6 +136,7 @@ function handleSearchFormSubmit(event) {
 
 searchFormEl.addEventListener("submit", handleSearchFormSubmit);
 
+// searched history displayed under search & saves under localstorage
 function searchedHistory() {
   var savedSearch = JSON.parse(localStorage.getItem("searchedHistory"));
   if (savedSearch !== null) {
