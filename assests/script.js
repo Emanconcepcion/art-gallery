@@ -15,7 +15,7 @@ function printResults(resultObj) {
   titleEl.textContent = resultObj.title;
 
   var displayBioEl = document.createElement("p");
-  displayBioEl.innerHTML += resultObj.artistDisplayBio;
+  displayBioEl.textContent = resultObj.artistDisplayBio;
 
   var imgResults = document.createElement("img");
   imgResults.setAttribute("src", resultObj.primaryImageSmall);
@@ -70,6 +70,8 @@ function getCollectionData(searchTerm) {
 // met api
 
 function getCollectionData2(objectIDs) {
+  var metData = [];
+
   for (var i = 0; i < 20; i++) {
     fetch(
       "https://collectionapi.metmuseum.org/public/collection/v1/objects/" +
@@ -79,11 +81,14 @@ function getCollectionData2(objectIDs) {
         return response.json();
       })
       .then(function (data) {
-        console.log(data);
+        // console.log(data);
+        metData.push(data);
 
         printResults(data);
       });
   }
+  console.log(metData);
+  //   metData.filter(function (element) {});
 }
 
 var searchFormEl = document.querySelector("#search-form");
