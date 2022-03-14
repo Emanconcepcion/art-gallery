@@ -1,6 +1,3 @@
-<<<<<<< Updated upstream
-# art-gallery
-=======
 # Unit 07: Project 1 (Group 4: Art Gallery)
 
 ## Overview
@@ -27,4 +24,3 @@ It offer software using a web API that manages the art galleries/museums (Smiths
 ## Screenshot
 
 ![](./assests/homepage.png)
->>>>>>> Stashed changes
